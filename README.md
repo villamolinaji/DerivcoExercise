@@ -16,6 +16,7 @@ I have created a solution with two console projects, one for each question.
         - Create primate method to calculate output length.
     * Decode        
         - Create primate method to calculate output length.
+        - I have not been able tu fully understand the logic done by decode method to resolve the exception and change it to work correctlt,
 
 
 

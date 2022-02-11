@@ -7,7 +7,7 @@
 
         public static void Init()
         {
-            for (int i = 0; i < 64; i++)
+            for (int i = 0; i < TRANSCODE_LENGTH; i++)
             {
                 transcode[i] = (char)((int)'A' + i);
                 if (i > 51)
@@ -20,9 +20,9 @@
                 }
                 
             }
-            transcode[62] = '+';
-            transcode[63] = '/';
-            //transcode[64] = '=';
+            //transcode[62] = '+';
+            transcode[62] = '/';
+            transcode[63] = '=';
         }
 
         public static string Encode(string input)
@@ -78,12 +78,12 @@
             int inputLength = input.Length;
             int outputLength = CalculateOutputLengthDecode(inputLength);
             char[] output = new char[outputLength];
-            int c = 0;
+            int outputPosition = 0;
             int bits = 0;
             int reflex = 0;
             for (int j = 0; j < inputLength; j++)
             {
-                reflex <<= 6;
+                reflex <<= 8;
                 bits += 6;
                 bool fTerminate = ('=' == input[j]);
                 if (!fTerminate)
@@ -94,8 +94,9 @@
                 while (bits >= 8)
                 {
                     int mod8 = (bits % 8);
-                    int mask = 0x000000ff << (bits % 8);
-                    output[c++] = transcode[(reflex & mask) >> mod8];                    
+                    int mask = 0x000000ff << mod8;
+                    int transcodePosition = (reflex & mask) >> mod8;                
+                    output[outputPosition++] = transcode[(reflex & mask) >> mod8];                    
                     reflex &= ~mask;
                     bits -= 8;
                 }

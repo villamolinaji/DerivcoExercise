@@ -10,9 +10,7 @@ namespace Question1
         {
             Transcode.Init();
 
-            string testString = "This is a test string";
-
-            //Transcode.Encode(testString);
+            string testString = "This is a test string";            
 
             if (Convert.ToBoolean(String.Compare(testString, Transcode.Decode(Transcode.Encode(testString)))))
             {
